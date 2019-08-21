@@ -1,0 +1,344 @@
+\documentclass[10pt]{beamer}
+
+\usepackage{pdfpages}
+
+\usetheme{AnnArbor}
+\usecolortheme{beaver}
+
+\graphicspath{{include/}}
+
+\setlength{\unitlength}{\textwidth}  % measure in textwidths
+\usepackage[normalem]{ulem}
+
+% to avoid counting all pages
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{enumerate subitem}{\alph{enumii}.}
+\setbeamertemplate{enumerate subsubitem}{\roman{enumiii}.}
+\setkeys{Gin}{width=0.6\textwidth}
+
+\newcommand{\ind}{\stackrel{ind}{\sim}}
+\providecommand{\ov}[1]{\overline{#1}}
+
+\newcommand{\pvalue}{$p$-value}
+\newcommand{\pvalues}{$p$-values}
+
+
+\institute[ISU]{Iowa State University}
+\date{\today}
+
+\title{Teaching \pvalues{}}
+\author{Jarad Niemi}
+
+\begin{document}
+
+
+
+
+
+\begin{frame}
+\maketitle
+
+\vspace{0.1in} \pause
+
+What is the probability the null hypothesis is true when you see a \pvalue{}
+equal to 0.04?
+
+\vspace{0.1in} \pause
+
+What is the probability the alternative hypothesis is true when you see a 
+\pvalue{} equal to 0.04?
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Outline}
+
+\begin{itemize}
+\item Bayesians vs Frequentists - not the point of today's talk
+\item ASA Statement on \pvalues{}
+\item STAT 226 hypothesis testing recipe
+\item Hypothesis testing false dichotomy
+\item Interpreting a \pvalue{} through Bayes rule
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Bayesianism and Frequentism}
+
+Fundamental difference (IMO):
+\begin{itemize}
+\item Frequentists interpret/define probability as the long-run relative 
+frequency of an event occurring in a series of attempts\pause, i.e. 
+\[ 
+P(A) = \lim_{n\to\infty} \frac{I(A_n)}{n}
+\]
+where $I(A_n)$ is the indicator that event $A$ occurs in the $n$th attempt.
+\pause
+\item Bayesians interpret/define probability as a personal statement about the 
+degree of belief with larger numbers indicating a higher personal belief in an
+event. 
+\end{itemize}
+
+\vspace{0.2in} \pause
+
+{\tiny \url{https://stats.stackexchange.com/questions/230097/think-like-a-bayesian-check-like-a-frequentist-what-does-that-mean}:}
+\begin{quote}
+Think like a Bayesian, check like a frequentist. 
+\end{quote}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{ASA Statement on \pvalues{}}
+{\small
+\url{https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108}:}
+
+\begin{enumerate}
+\item \pvalues{} can indicate how incompatible the data are with a specified 
+statistical model. 
+
+\pause
+
+\item \pvalues{} do {\bf NOT} measure the probability that the studied 
+hypothesis is true, 
+or the probability that the data were produced by random chance alone.
+\item Scientific conclusions and business or policy decisions should {\bf NOT} be 
+based only on whether a \pvalue{} passes a specific threshold.
+\item Proper inference requires full reporting and transparency.
+\item A \pvalue{}, or statistical significance, does {\bf NOT} measure the size of an effect or the importance of a result.
+\item By itself, a \pvalue{} does {\bf NOT} provide a good measure of evidence 
+regarding a model or hypothesis.
+\end{enumerate}
+
+\pause
+
+Bold-face and capitalization have been added for emphasis; 
+the original article bold-faced these sentences.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{STAT 226 Recipe}
+
+Simplified for $Y_i \ind N(\mu,\sigma^2)$ with $H_0: \mu=\mu_0$:
+
+\vspace{0.1in}
+\pause
+
+\begin{enumerate}[<+->]
+\item Determine $\mu_0$.
+\item Obtain 
+\[ t = \frac{\overline{y} - \mu_0}{s/\sqrt{n}}. \]
+\item Find the \pvalue{} (from JMP).
+\item Decision with conclusion
+  \begin{itemize}
+  \item If \pvalue{} is small enough, {\bf reject null hypothesis}.
+  
+  \vspace{0.05in}
+  
+  Conclude that the data most likely came from a population that has a mean 
+  different than $\mu_0$.
+  
+  \vspace{0.05in}
+  
+  \item If \pvalue{} is not small enough, {\bf fail to reject null hypothesis}.
+  
+  \vspace{0.05in}
+  
+  The data lack sufficient evidence to conclude that the population mean is 
+  different than $\mu_0$.
+  \end{itemize}
+  
+\end{enumerate}
+
+\end{frame}
+
+
+
+
+% \begin{frame}
+% \frametitle{STAT 226 Recipe}
+% 
+% Simplified for $Y_i \ind N(\mu,\sigma^2)$ with $H_0: \mu=\mu_0$:
+% 
+% \vspace{0.1in}
+% \pause
+% 
+% \begin{enumerate}[<+->]
+% \item Determine $\mu_0$.
+% \item Obtain
+% \[ t = \frac{\overline{y} - \mu_0}{s/\sqrt{n}}. \]
+% \item Find the \pvalue{} (from JMP).
+% \item Decision with conclusion
+%   \begin{itemize}
+%   \item If \pvalue{} is small enough, {\bf reject null \alert{model}}.
+%   \item If \pvalue{} is not small enough, {\bf fail to reject null \alert{model}}.
+%   \end{itemize}
+% \item \alert{Investigate null model assumptions.}
+% \end{enumerate}
+% \end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{A \pvalue{} definition}
+% 
+% \begin{definition}
+% A \alert{\pvalue{}} is the probability of observing a test statistic as or more
+% extreme than that observed if the null model is true.
+% \end{definition}
+% 
+% \vspace{0.1in}
+% 
+% Issues with \pvalue{} definition:
+% 
+% \begin{itemize}
+% \item 
+% \end{itemize}
+% 
+% \end{frame}
+
+
+\begin{frame}
+\frametitle{False dichotomy}
+
+Consider the hypothesis test:
+\[
+H_0: \mu = \mu_0 \qquad \mbox{versus} \qquad H_A: \mu \ne \mu_0.
+\]
+which implies the scientific question 
+``is the population mean $\mu_0$ or not?''
+
+\vspace{0.1in} \pause
+
+The \alert{false dichotomy} is that the only two possibilities are 
+\[ 
+H_0: Y_i \ind N(m_0,\sigma^2) 
+\qquad \mbox{versus} \qquad
+H_A: Y_i \ind N(\mu,\sigma^2), \mu \ne \mu_0.
+\]
+\pause
+In reality, all model assumptions are wrong including 
+\begin{itemize}
+\item independence,
+\item normality,
+\item constant variance, and
+\item mean is $\mu_0$. 
+\end{itemize}
+\pause
+We need to evaluate these assumptions before we conclude $\mu\ne m_0$ for the
+population of interest.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Interpreting a \pvalue{} when assumptions are true}
+
+Suppose it is true that $Y_i \ind N(\mu,\sigma^2)$ 
+\pause
+and we obtain a \pvalue{} below our pre-determined threshold, 
+\pause
+e.g. $p=0.04 < 0.05$.
+\pause 
+We can use Bayes rule to interpret this \pvalue{}:
+\[
+P(H_0|p) \pause = \frac{P(p|H_0)P(H_0)}{P(p|H_0)P(H_0)+P(p|H_A)P(H_A)}.
+\]
+\pause
+\begin{itemize}
+\item $P(H_0) = 1-P(H_A)$ is the relative frequency of null hypotheses that are 
+true in the experiments that you conduct. \pause
+\item $P(p|H_0)$ is the distribution of \pvalues{} when $H_0$ is true.
+\item $P(p|H_A)$ is the distribution of \pvalues{} when $H_A$ is true.
+\end{itemize}
+
+\pause
+
+<<eval=FALSE>>=
+shiny::runGitHub('jarad/pvalue')
+@
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Relationship to ASA Statement on \pvalues{}}
+
+\begin{enumerate}
+\item \alert<2>{\pvalues{} can indicate how incompatible the data are with a specified 
+statistical model.}
+\item \alert<1>{\pvalues{} do {\bf NOT} measure the probability that the studied 
+hypothesis is true},
+or the probability that the data were produced by random chance alone.
+\item \alert<1>{Scientific conclusions and business or policy decisions should {\bf NOT} be 
+based only on whether a \pvalue{} passes a specific threshold}.
+\item \alert<1>{Proper inference requires full reporting and transparency.}
+\item A \pvalue{}, or statistical significance, does {\bf NOT} measure the size of an effect or the importance of a result.
+\item \alert<1>{By itself, a \pvalue{} does {\bf NOT} provide a good measure of evidence 
+regarding a model or hypothesis.}
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Main questions}
+
+What is the probability the null hypothesis is true when you see a \pvalue{}
+equal to 0.04?
+
+\vspace{0.1in} \pause
+
+What is the probability the alternative hypothesis is true when you see a 
+\pvalue{} equal to 0.04?
+
+\end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{Updated STAT 226 Recipe}
+% \end{frame}
+
+
+\begin{frame}
+\frametitle{Summary}
+
+something
+\begin{itemize}
+\item something
+\end{itemize}
+
+\vspace{0.1in}
+
+This slides are available 
+\begin{itemize}
+\item \url{https://github.com/jarad/pvalue2019}
+\item \url{http://www.jarad.me/research/presentations.html}
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
