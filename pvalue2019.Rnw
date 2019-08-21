@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[handout,10pt]{beamer}
 
 \usepackage{pdfpages}
 
@@ -36,13 +36,10 @@
 \institute[ISU]{Iowa State University}
 \date{\today}
 
-\title{Teaching \pvalues{}}
+\title{Interpreting \pvalues{}}
 \author{Jarad Niemi}
 
 \begin{document}
-
-
-
 
 
 \begin{frame}
@@ -325,9 +322,13 @@ What is the probability the alternative hypothesis is true when you see a
 \begin{frame}
 \frametitle{Summary}
 
-something
+Summary
 \begin{itemize}
-\item something
+\item As typically presented, hypothesis testing presents a false dichotomy of
+the only two possibilities being that the null model or the alternative model
+are correct. \pause
+\item The probability the null hypothesis is true conditional on a particular 
+\pvalue{} depends on a few unknowable values.
 \end{itemize}
 
 \vspace{0.1in}
